@@ -8,7 +8,7 @@
       endpoint: /splunk
   rules:
     - name: Rules to process the payload
-      condition: event.payload is defined and event.payload.endpoint == "splunk"
+      condition: event.payload is defined
       action:
         print_event:
           pretty: true
