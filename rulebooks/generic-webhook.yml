@@ -13,5 +13,5 @@
       print_event: 
         #pretty: true
         var_root: 
-          address: payload.address
+          address: {{ payload.address }}
           another: payload.endpoint
