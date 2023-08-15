@@ -12,4 +12,4 @@
     action:
       print_event: 
         pretty: true
-        var_root: event.endpoint
+        var_root: event
