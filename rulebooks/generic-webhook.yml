@@ -11,7 +11,3 @@
     condition: event.payload is defined and event.payload.endpoint == "splunk"
     action:
       print_event: 
-        #pretty: true
-        var_root: 
-          address: {{ payload.address }}
-          another: payload.endpoint
