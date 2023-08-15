@@ -10,4 +10,4 @@
   - name: Rules to process the payload
     condition: event.payload is defined
     action:
-      print_event:
+      print_event: event.payload
