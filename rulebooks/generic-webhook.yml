@@ -1,0 +1,12 @@
+- name: Listen to Events
+  hosts: localhost
+  sources:
+  - name: Listen to the Host and Port
+    ansible.eda.webhook:
+      host: 0.0.0.0
+      port: 5000
+  rules:
+  - name: Rules to process the payload
+    condition: event.payload is defined
+    action:
+      print_event:
