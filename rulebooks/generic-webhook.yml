@@ -6,17 +6,10 @@
       host: 0.0.0.0
       port: 5000
   rules:
+
   #
   # Process the splunk webhooks
   #
-  #- name: Rules to process the splunk
-  #  condition: event.payload is defined and event.meta.endpoint == "splunk"
-  #  action:
-  #    run_playbook:
-  #      name: playbooks/splunk.yml
-  #      extra_vars:
-  #        event: "{{ event }}"
- 
   - name: Rules to process the splunk
     condition: event.payload is defined and event.meta.endpoint == "splunk"
     action:
@@ -26,13 +19,13 @@
   #
   # Process web rules
   #
-#  - name: Rules to process the web
-#    condition: event.payload is defined and event.meta.endpoint == "web"
-#    action:
-#      run_playbook:
-#        name: playbooks/web.yml
-#        extra_vars:
-#          event: "{{ event }}"
+  - name: Rules to process the web
+    condition: event.payload is defined and event.meta.endpoint == "web"
+    action:
+      run_job_template:
+        name: eda-template
+        organization: Default
+
   #
   # Just print the payload
   #

@@ -1,0 +1,41 @@
+- name: Listen to Events
+  hosts: localhost
+  sources:
+  - name: Listen to the Host and Port
+    ansible.eda.webhook:
+      host: 0.0.0.0
+      port: 5000
+  rules:
+  
+  #
+  # Process the splunk webhooks
+  #
+  - name: Rules to process the splunk
+    condition: event.payload is defined and event.meta.endpoint == "splunk"
+    action:
+      run_playbook:
+        name: playbooks/splunk.yml
+        extra_vars:
+          event: "{{ event }}"
+ 
+  #
+  # Process web rules
+  #
+  - name: Rules to process the web
+    condition: event.payload is defined and event.meta.endpoint == "web"
+    action:
+      run_playbook:
+        name: playbooks/web.yml
+        extra_vars:
+          event: "{{ event }}"
+
+  #
+  # Just print the payload
+  #
+  - name: print output
+    condition: event.payload is defined
+    action:
+      debug:
+        msg:
+          - EVENT WAS NOT PROCESSED
+          - "EVENT IS  {{ event }}"
