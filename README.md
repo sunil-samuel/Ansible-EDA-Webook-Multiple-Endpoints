@@ -51,3 +51,18 @@ Call the `web` endpoint as follows:
 curl -d '{"warn":"2023-08-16T05:01:48.101-04:00  WARN 111934 --- [http-nio-0.0.0.0-8082-exec-5] o.s.web.servlet.PageNotFound : No mapping for GET /somepage.html"}' -H "Content-Type: application" -X POST http://localhost:5000/web
 
 ```
+
+## Project and Activation from AAP EDA UI
+
+Once everything looks good, configure the AAP EDA UI to create a project and a activiation.  This assumes
+that you already installed AAP 2.4 that supports EDA.
+
+### Create a Project
+
+From the EDA AAP UI, create a Project as follows:
+![Create a Project](docs/01.create-project.png)
+
+### Create an Activation
+
+From the EDA AAP UI, create a Rulebook Activation as follows:
+![Create a Project](docs/02.create-activations.png)
