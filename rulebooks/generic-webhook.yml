@@ -14,7 +14,7 @@
     condition: event.payload is defined and event.meta.endpoint == "splunk"
     action:
       run_job_template:
-        name: eda-template
+        name: eda-template-splunk
         organization: Default
         job_args:
           extra_vars:
@@ -26,7 +26,7 @@
     condition: event.payload is defined and event.meta.endpoint == "web"
     action:
       run_job_template:
-        name: eda-template
+        name: eda-template-web
         organization: Default
         job_args:
           extra_vars:
