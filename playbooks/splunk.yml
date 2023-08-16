@@ -4,6 +4,5 @@
   tasks:
   - debug:
       msg: 
-#      - You just processed splunk {{ event.payload }}
-      - You just processed splunk
+      - You just processed splunk {{ event.payload }}
 

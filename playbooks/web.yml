@@ -3,6 +3,5 @@
   gather_facts: false
   tasks:
   - debug:
-#      msg: You just processed web {{ event.payload }}
-      msg: You just processed web
+      msg: You just processed web {{ event.payload }}
 
