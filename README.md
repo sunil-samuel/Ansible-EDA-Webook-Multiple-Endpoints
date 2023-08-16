@@ -5,6 +5,12 @@ which the event is sent, call different playbooks to process the event.  The cod
 will delegate the events by sending the complete playload to the playbooks, which can
 then do the processing.
 
+There are two ways to call a playbook within a rulebook:
+1. `run_playbook` :: Only supported with the `ansible-rulebook` cli.  This will not
+work with the EDA Controller UI.
+1. `run_job_template` :: This is supported by the EDA Controller UI, but requires
+some configuration (detailed below).
+
 ## Running Locally
 
 The script can be tested locally prior to creating an activation within the EDA UI.
@@ -26,7 +32,7 @@ use `ansible-rulebook` to run the code.  Using the `-v` parameter will produce m
 debug logs.
 
 ```sh
-%> ansible-rulebook --rulebook rulebooks/generic-webhook.yml -i inventory.yml
+%> ansible-rulebook --rulebook rulebooks/generic-webhook-run_playbook.yml -i inventory.yml
 
 2023-08-15 10:30:57,459 - ansible_rulebook.app - INFO - Starting sources
  ...
@@ -37,25 +43,30 @@ debug logs.
 
 use `curl` or similar tool to send a `POST` payload to the listening host.
 
-Call the `splunk` endpoint as follows:
+#### Call the `splunk` endpoint as follows:
 --------------------------------------
 
 ```sh
 curl -d '{"summary": "Test to create TI issue from mule","description": "Mule Testing Jira Api one level of Module","type": "Incident","priority": "3-Medium","reporter": "ag","moduleMapLevels": {"parent": "Common to All Modules"}, "moduleMapAssets": [{"name": "Rates | IRD"},{"name": "CRD | CRD"}]}' -H "Content-Type: application" -X POST http://localhost:5000/splunk
 ```
 
-Call the `web` endpoint as follows:
+#### Call the `web` endpoint as follows:
 -----------------------------------
 
 ```sh
 curl -d '{"warn":"2023-08-16T05:01:48.101-04:00  WARN 111934 --- [http-nio-0.0.0.0-8082-exec-5] o.s.web.servlet.PageNotFound : No mapping for GET /somepage.html"}' -H "Content-Type: application" -X POST http://localhost:5000/web
 
 ```
+---
 
 ## Project and Activation from AAP EDA UI
 
 Once everything looks good, configure the AAP EDA UI to create a project and a activiation.  This assumes
 that you already installed AAP 2.4 that supports EDA.
+
+In order for the playbooks to be called by the main rulebook (configured within the EDA Controller UI), you
+must configure two templates with the main AAP Controller UI, namely `eda-template-splunk` and `eda-template-web` that will
+be called by the EDA rulebook.
 
 ### Create a Project
 
