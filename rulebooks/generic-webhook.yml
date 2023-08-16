@@ -16,9 +16,9 @@
       run_job_template:
         name: eda-template
         organization: Default
- #       job_args:
- #         extra_vars:
- #           event: {{ event }}
+        job_args:
+          extra_vars:
+            event: "{{ event }}"
   #
   # Process web rules
   #
@@ -28,9 +28,9 @@
       run_job_template:
         name: eda-template
         organization: Default
- #       job_args:
- #         extra_vars:
- #           event: {{ event }}
+        job_args:
+          extra_vars:
+            event: "{{ event }}"
 
   #
   # Just print the payload
