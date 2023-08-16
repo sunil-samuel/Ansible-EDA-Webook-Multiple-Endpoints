@@ -1,0 +1,7 @@
+- name: Processing Web
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - debug:
+      msg: You just processed web {{ event.payload }}
+
