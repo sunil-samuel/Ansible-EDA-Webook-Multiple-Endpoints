@@ -1,9 +1,15 @@
-# Ansible Automation Platform (AAP) 2.4 - eda.webhook - Differentiate Endpoints
+# Ansible Automation Platform (AAP) 2.4 - eda.webhook - Multiple Endpoints
 
 A sample rulebook that uses eda webhooks to listen for events.  Given the endpoint to
 which the event is sent, call different playbooks to process the event using `run_job_template`.
 The code will delegate the events by sending the complete playload to the playbooks, which can
 then do the processing.
+
+```
+NOTE:  There is only one listener on this hostname and port.  Hence, all endpoints would eventually
+be received by one listener, but the rules will delegate the events to different `playbooks`
+based on the endpoint to which the event was sent.
+```
 
 There are two ways to call a playbook within a rulebook:
 1. `run_playbook` :: Only supported with the `ansible-rulebook` cli.  This will not
@@ -18,7 +24,7 @@ This is useful to debug the playbooks.
 
 ### Install Rulebook
 
-This assumes that you already installed python3 and pip and ansible.
+This assumes that you already installed python3, pip, and ansible.
 
 Install ansible-rulebook an ansible.eda as follows:
 
@@ -183,3 +189,24 @@ From menu, `Views → Rulebook Activations`.  Click the `+ Create rulebook activ
 Following is an example:
 
 ![Create EDA Activation](docs/02.create-activations.png)
+
+### Testing the Rulebook
+
+Now that the EDA Controller UI and AAP Controller UI are working together, test that the payload is processed
+correctly.
+
+From menu, `Views → Rulebook Activations`.  Check that the activation is running.
+
+![Validate Activation](docs/03.activation-running.png)
+
+Click on the `name of the activation → History tab -> the name of the running activation`.
+
+This will display the output.
+
+Send a request to the URL using the correct IP address or hostname.  
+
+```sh
+[root@eda-controller-01 ~]# curl -d '{"summary": "Test to create TI issue from mule","description": "Mule Testing Jira Api one level of Module","type": "Incident","priority": "3-Medium","reporter": "ag","moduleMapLevels": {"parent": "Common to All Modules"}, "moduleMapAssets": [{"name": "Rates | IRD"},{"name": "CRD | CRD"}]}' -H "Content-Type: application" -X POST http://192.168.111.62:5000/splunk
+```
+
+Both AAP Controller and EDA Controller logs will display the execution of the rulebook and the template.
