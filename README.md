@@ -1,4 +1,4 @@
-# eda.webhook - Listen on Different Endpoints
+# Ansible Automation Platform (AAP) 2.4 - eda.webhook - Listen on Different Endpoints
 
 A sample rulebook that uses eda webhooks to listen for events.  Given the endpoint to
 which the event is sent, call different playbooks to process the event.  The code
@@ -55,7 +55,6 @@ curl -d '{"summary": "Test to create TI issue from mule","description": "Mule Te
 
 ```sh
 curl -d '{"warn":"2023-08-16T05:01:48.101-04:00  WARN 111934 --- [http-nio-0.0.0.0-8082-exec-5] o.s.web.servlet.PageNotFound : No mapping for GET /somepage.html"}' -H "Content-Type: application" -X POST http://localhost:5000/web
-
 ```
 ---
 
@@ -66,14 +65,50 @@ that you already installed AAP 2.4 that supports EDA.
 
 In order for the playbooks to be called by the main rulebook (configured within the EDA Controller UI), you
 must configure two templates with the main AAP Controller UI, namely `eda-template-splunk` and `eda-template-web` that will
-be called by the EDA rulebook.
+be called by the EDA rulebook.  Therefore, you will need to:
+
+1. [Configure AAP Controller UI](#configure-aap-controller-ui)
+1. [Configure EDA Controller UI](#configure-eda-controller-ui)
+
+### Configure AAP Controller UI
+
+On the AAP Controller UI, create:
+
+#### New Organization (or Use Default Organization)
+
+From menu, `Access → Organizations`.  Click on `Add`.  You can also use the Default organization.
+
+##### New Application
+
+From menu, `Administration → Applications`.  Click on `Add`.  Use the following values.
+>>>
+|            |             |
+|------------|-------------|
+|Name        |A unique name|
+|Organization|Select the Organization|
+|Authorization grant type|Select `Resource owner password-based`|
+|Client type|Select `Public`|
+
+>> Access Token to be Used by EDA Controller UI
+>>> From menu, `Access → Users`.  Click on the username (not the Action edit icon).
+>>> On the `Tokens` tab, Add an new token.
+ 
+
+
+1. Project Using the Github Source
+1. New Inventory
+1. Two Templates (eda-template-splunk and eda-template-web)
+
+
+
+### Configure EDA Controller UI
 
 ### Create a Project
 
 From the EDA AAP UI, create a Project as follows:
-![Create a Project](docs/01.create-project.png)
+![Create a Project](docs/01.create-project.png) 
 
-### Create an Activation
+### Create EDA Activation
 
 From the EDA AAP UI, create a Rulebook Activation as follows:
-![Create a Project](docs/02.create-activations.png)
+![Create EDA Activation](docs/02.create-activations.png)
