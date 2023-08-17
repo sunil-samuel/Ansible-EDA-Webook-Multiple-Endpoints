@@ -78,10 +78,10 @@ On the AAP Controller UI, create:
 
 From menu, `Access → Organizations`.  Click on `Add`.  You can also use the Default organization.
 
-##### New Application
+#### New Application
 
 From menu, `Administration → Applications`.  Click on `Add`.  Use the following values.
->>>
+
 |            |             |
 |------------|-------------|
 |Name        |A unique name|
