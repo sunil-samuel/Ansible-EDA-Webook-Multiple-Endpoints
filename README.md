@@ -1,8 +1,8 @@
-# Ansible Automation Platform (AAP) 2.4 - eda.webhook - Listen on Different Endpoints
+# Ansible Automation Platform (AAP) 2.4 - eda.webhook - Differentiate Endpoints
 
 A sample rulebook that uses eda webhooks to listen for events.  Given the endpoint to
-which the event is sent, call different playbooks to process the event.  The code
-will delegate the events by sending the complete playload to the playbooks, which can
+which the event is sent, call different playbooks to process the event using `run_job_template`.
+The code will delegate the events by sending the complete playload to the playbooks, which can
 then do the processing.
 
 There are two ways to call a playbook within a rulebook:
@@ -82,33 +82,104 @@ From menu, `Access → Organizations`.  Click on `Add`.  You can also use the De
 
 From menu, `Administration → Applications`.  Click on `Add`.  Use the following values.
 
-|            |             |
+|Field       |Value        |
 |------------|-------------|
 |Name        |A unique name|
 |Organization|Select the Organization|
 |Authorization grant type|Select `Resource owner password-based`|
 |Client type|Select `Public`|
 
->> Access Token to be Used by EDA Controller UI
->>> From menu, `Access → Users`.  Click on the username (not the Action edit icon).
->>> On the `Tokens` tab, Add an new token.
- 
+#### Access Token to be Used by EDA Controller UI
+From menu, `Access → Users`.  Click on the username (not the Action edit icon).  On the `Tokens` tab, click on `Add`.
+Use the following values.
 
+|Field       |Value        |
+|------------|-------------|
+|Application        | Click the search (magnifying glass icon) and select the Application you created |
+|Scope|Select `Write`|
 
-1. Project Using the Github Source
-1. New Inventory
-1. Two Templates (eda-template-splunk and eda-template-web)
+Click `Save`.  This will open a modal page with `Token Information`.  Copy and save the `Token` and `Refresh Token` value.
+This token will be used to configure the EDA Controller UI.
 
+```
+NOTE:  This information will not be displayed again.
+```
 
+#### Project
+
+Create a new `Project` pointing to the Git repostiory of our code.
+From menu, `Resources → Projects`.  Click on `Add`.  Use the following values.
+
+|Field       |Value        |
+|------------|-------------|
+|Organization        | Click the search (magnifying glass icon) and select the Organization |
+|Source Control Type|Select `Git`|
+
+All others parameters, except for `Name` can be left blank.
+
+#### Templates
+
+Create two templates named `eda-template-splunk` and `eda-template-web`.
+From menu, `Resources → Template`. Click `Add` and select `Add job template`.  Use the following values.
+
+|Field       |Value        |
+|------------|-------------|
+| Name | `eda-template-splunk` |
+|Job Typw        | `Run` |
+|Inventory|Click the search (magnifying glass icon) and select the Inventory|
+|Project|Click the search (magnifying glass icon) and select the Project|
+|Playbook| Select `playbooks/splunk.yml`|
+|Variables| Click the checkbox `Prompt on launch` |
+
+Repeat for template `eda-template-web`.
+
+To test these templates, from menu, `Resources → Templates`.  Clock on the rocket icon to launch this event.
+On the modal page, select `YAML` and add the following into the `Variables` textarea and click `Next` and then `Launch`.
+
+```yml
+event:
+  payload: hello
+```
 
 ### Configure EDA Controller UI
 
-### Create a Project
+On the EDA Controller UI:
 
-From the EDA AAP UI, create a Project as follows:
+#### Update the Controller Token
+
+To allow the EDA UI the ability to call the templates we created on the AAP Controller UI, configure the token
+that was created earlier in the [Access Token to be Used by EDA Controller UI](#access-token-to-be-used-by-eda-controller-ui) section.
+
+From menu, `User Access → Users`, click on the username (Not the edit icon).  Click the `Controller Tokens` tab and
+click on `+ Create controller token`.  Use the following values.
+
+|Field       |Value        |
+|------------|-------------|
+| Token | The `Token` that was copied earlier (not the `Refresh Token`)  |
+
+#### Create a New Project
+
+From menu, `Resources → Projects`.  Click the `+ Create project`.  The current version of 2.4 supports only `Git`
+for `SCM Type`.  Use the following values.
+
+|Field       |Value        |
+|------------|-------------|
+| SCM URL | `https://github.com/sunil-samuel/Ansible-EDA-Webook-Multiple-Endpoints`  |
+
+Following is an example:
+
 ![Create a Project](docs/01.create-project.png) 
 
-### Create EDA Activation
+#### Create EDA Activation
 
-From the EDA AAP UI, create a Rulebook Activation as follows:
+From menu, `Views → Rulebook Activations`.  Click the `+ Create rulebook activation`.  Use the following values.
+
+|Field       |Value        |
+|------------|-------------|
+| Project | From the dropdown menu, select the project |
+|Rulebook| From the dropdown menu, select `generic-webhook.yml` |
+|Decision environment|select `Default Decision Environment` |
+
+Following is an example:
+
 ![Create EDA Activation](docs/02.create-activations.png)
