@@ -81,10 +81,12 @@ be called by the EDA rulebook.  Therefore, you will need to:
 On the AAP Controller UI, create:
 
 #### New Organization (or Use Default Organization)
+---
 
 From menu, `Access → Organizations`.  Click on `Add`.  You can also use the Default organization.
 
 #### New Application
+---
 
 From menu, `Administration → Applications`.  Click on `Add`.  Use the following values.
 
@@ -96,6 +98,8 @@ From menu, `Administration → Applications`.  Click on `Add`.  Use the followin
 |Client type|Select `Public`|
 
 #### Access Token to be Used by EDA Controller UI
+---
+
 From menu, `Access → Users`.  Click on the username (not the Action edit icon).  On the `Tokens` tab, click on `Add`.
 Use the following values.
 
@@ -112,6 +116,7 @@ NOTE:  This information will not be displayed again.
 ```
 
 #### Project
+---
 
 Create a new `Project` pointing to the Git repostiory of our code.
 From menu, `Resources → Projects`.  Click on `Add`.  Use the following values.
@@ -124,6 +129,7 @@ From menu, `Resources → Projects`.  Click on `Add`.  Use the following values.
 All others parameters, except for `Name` can be left blank.
 
 #### Templates
+---
 
 Create two templates named `eda-template-splunk` and `eda-template-web`.
 From menu, `Resources → Template`. Click `Add` and select `Add job template`.  Use the following values.
@@ -152,6 +158,7 @@ event:
 On the EDA Controller UI:
 
 #### Update the Controller Token
+---
 
 To allow the EDA UI the ability to call the templates we created on the AAP Controller UI, configure the token
 that was created earlier in the [Access Token to be Used by EDA Controller UI](#access-token-to-be-used-by-eda-controller-ui) section.
@@ -164,6 +171,7 @@ click on `+ Create controller token`.  Use the following values.
 | Token | The `Token` that was copied earlier (not the `Refresh Token`)  |
 
 #### Create a New Project
+---
 
 From menu, `Resources → Projects`.  Click the `+ Create project`.  The current version of 2.4 supports only `Git`
 for `SCM Type`.  Use the following values.
@@ -177,6 +185,7 @@ Following is an example:
 ![Create a Project](docs/01.create-project.png) 
 
 #### Create EDA Activation
+---
 
 From menu, `Views → Rulebook Activations`.  Click the `+ Create rulebook activation`.  Use the following values.
 
@@ -191,6 +200,7 @@ Following is an example:
 ![Create EDA Activation](docs/02.create-activations.png)
 
 ### Testing the Rulebook
+---
 
 Now that the EDA Controller UI and AAP Controller UI are working together, test that the payload is processed
 correctly.
