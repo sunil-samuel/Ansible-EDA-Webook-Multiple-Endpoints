@@ -38,7 +38,7 @@ use `ansible-rulebook` to run the code.  Using the `-v` parameter will produce m
 debug logs.
 
 ```sh
-%> ansible-rulebook --rulebook rulebooks/generic-webhook-run_playbook.yml -i inventory.yml
+%> ansible-rulebook --rulebook rulebooks/generic-webhook-run_playbook.yml -i inventory.yml --vars vars.yml
 
 2023-08-15 10:30:57,459 - ansible_rulebook.app - INFO - Starting sources
  ...
@@ -114,6 +114,7 @@ This token will be used to configure the EDA Controller UI.
 ```
 NOTE:  This information will not be displayed again.
 ```
+Make sure to save this information.
 
 #### Project
 ---
@@ -125,6 +126,7 @@ From menu, `Resources → Projects`.  Click on `Add`.  Use the following values.
 |------------|-------------|
 |Organization        | Click the search (magnifying glass icon) and select the Organization |
 |Source Control Type|Select `Git`|
+|Source Control URL|`https://github.com/sunil-samuel/Ansible-EDA-Webook-Multiple-Endpoints`|
 
 All others parameters, except for `Name` can be left blank.
 

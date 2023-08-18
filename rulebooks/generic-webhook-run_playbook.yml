@@ -3,15 +3,15 @@
   sources:
   - name: Listen to the Host and Port
     ansible.eda.webhook:
-      host: 0.0.0.0
-      port: 5000
+      host: "{{ listen.host }}"
+      port: "{{ listen.port }}"
   rules:
   
   #
   # Process the splunk webhooks
   #
   - name: Rules to process the splunk
-    condition: event.payload is defined and event.meta.endpoint == "splunk"
+    condition: event.payload is defined and event.meta.endpoint == "{{ endpoint.splunk }}"
     action:
       run_playbook:
         name: playbooks/splunk.yml
@@ -22,7 +22,7 @@
   # Process web rules
   #
   - name: Rules to process the web
-    condition: event.payload is defined and event.meta.endpoint == "web"
+    condition: event.payload is defined and event.meta.endpoint == "{{ endpoint.web }}"
     action:
       run_playbook:
         name: playbooks/web.yml

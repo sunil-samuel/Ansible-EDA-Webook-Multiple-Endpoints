@@ -1,0 +1,7 @@
+listen:
+  host: 0.0.0.0
+  port: 5001
+
+endpoint:
+  splunk: /api/v1/splunk
+  web: /api/v1/web
